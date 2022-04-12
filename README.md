@@ -1,2 +1,15 @@
-# python-study
-该仓库记录面试知识点以及算法
+## 仓库中记录python的知识点以及面试题
+
+---
+
+### 多线程
+
+**src/multithreading.py**
+
+---
+
+### 排序算法
+
+**sort_algorithm**
+
+---
