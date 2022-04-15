@@ -1,8 +1,11 @@
 # 冒泡排序
 def bubbleSort(arr):
     for i in range(1, len(arr)):
+        print('i', i, arr[i])
         for j in range(0, len(arr) - i):
+            print('j', j, arr[j])
             if arr[j] > arr[ j + 1]:
+                print('比较：', arr[i], arr[j+1])
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
 
@@ -37,8 +40,8 @@ def quickSort(lists, left=None, right=None):
 
 
 if __name__ == '__main__':
-    lists = [1, 4, 63, 79, 75, 324, 76576, 23, 9, 80, 37, 56]
+    lists = [3,2,6,56]
+    
     resu = bubbleSort(lists)
-    res = quickSort(lists=lists)
 
-    print(res)
+    print(resu)
