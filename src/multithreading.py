@@ -9,8 +9,6 @@
 import threading
 import time
 
-import filelock
-
 
 def Thread_function_one(x, y):
     for i in range(x, y):
@@ -76,6 +74,33 @@ class Thread_function_nine(threading.Thread):
         print("{}:{}".format(self.name, x))
         lock.release()
 
+# 线程的同步--Event对象
+'''
+Event对象存在于threading模块中，Event实例管理着一个内部标志，通过set（）方法来将该标志设置
+成True，使用clear（）方法将该标志重置成False
+wait（）方法会使用当前线程阻塞知道标志被设置成True，wait（）可以选择给他一个参数，代表时间，代表
+阻塞多长时间，若不设置就是阻塞知道标志被设置成True
+isSet（）方法：能判断标志位是否被设置为True
+'''
+class Thread_function_ten(threading.Thread):
+    def run(self):
+        Dinner.clear()
+        print("Cooking denner")
+        time.sleep(3)
+        Dinner.set()
+        print(self.name, ":dinner is OK!")
+
+class Son(threading.Thread):
+    def run(self):
+        while True:
+            if Dinner.isSet():
+                break
+            else:
+                print("dinner isnot ready!")
+                Dinner.wait(1)
+        print(self.name, ':Eating Dinner')
+
+
 if __name__ == '__main__':
     print("Test threading!")
     # 用thread.Thread直接在线程中运行函数
@@ -122,11 +147,21 @@ if __name__ == '__main__':
     # 线程的同步--锁
     x = 0
     lock = threading.RLock()
+    # def main():
+    #     l = []
+    #     for i in range(5):
+    #         l.append(Thread_function_nine())
+    #     for i in l:
+    #         i.start()
+    #
+    # main()
     def main():
-        l = []
-        for i in range(5):
-            l.append(Thread_function_nine())
-        for i in l:
-            i.start()
+        mon = Thread_function_ten()
+        son = Son()
+        mon.name = "Mon"
+        son.name = "Son"
+        mon.start()
+        son.start()
 
+    Dinner = threading.Event()
     main()
